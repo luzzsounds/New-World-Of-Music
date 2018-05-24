@@ -52,7 +52,7 @@
         </select>
 
     </div>
-
+    <input type="submit" value="Ajouter" />
     <input type="submit" value="S'inscrire" />
     <input type="hidden" name="frmRegistration" />
 
