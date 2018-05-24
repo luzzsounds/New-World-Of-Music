@@ -178,3 +178,42 @@ nav ul li a {
 }
 /*------------------------------------------ END------------------------------------------*/
 
+/*--------------------------------------------- FOOTER ---------------------------------------------------------------*/
+
+.footer{
+
+    background-color: #292c2f;
+    width: 100%;
+    text-align: left;
+    font: normal 16px sans-serif;
+
+    padding: 15px 20px;
+    margin-top: 80px;
+    position:absolute;
+    bottom:0px;
+}
+
+.MenuFooter{
+
+    color:  #8f9296;
+    font-size: 14px;
+    margin: 0;
+}
+
+.FooterMenuLinks{
+
+    font-size:18px;
+    font-weight: bold;
+    color:  #ffffff;
+    margin: 0 0 10px;
+    padding: 0;
+}
+
+.FooterMenuLinks a  {
+    display:inline-block;
+    line-height: 1.8;
+    text-decoration: none;
+    color:  inherit;
+}
+
+/*--------------------------------------------- END ------------------------------------------------------------------*/
