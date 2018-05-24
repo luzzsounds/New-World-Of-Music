@@ -120,7 +120,7 @@ else {
 
     <div class="form-group">
 
-        <select id="interet" multiple>
+        <select id="musique" onchange="AjoutOptionAuSelect(this);">
             <option value="Metal">Metal</option>
             <option value="Electro">Electro</option>
             <option value="Minimal">Minimal</option>
