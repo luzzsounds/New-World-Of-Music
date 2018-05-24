@@ -26,15 +26,15 @@
             </div>
 
             <div class="logo">
-                LOGO
+                New world of music
             </div>
 
             <div class="menu">
                 <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Accueil</a></li>
+                    <li><a href="#">Événement</a></li>
+                    <li><a href="#">Inscription</a></li>
+                    <li><a href="#">Connexion</a></li>
                 </ul>
             </div>
         </nav>
