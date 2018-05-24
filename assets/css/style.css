@@ -1,0 +1,13 @@
+body{
+
+
+    background-image: url("../img/background.jpg");
+    background-size: 1920px;
+    background-repeat: no-repeat;
+
+}
+
+#logo{
+
+    color: white;
+}
