@@ -46,9 +46,9 @@
             <option value="8">Ragga,DanceHall</option>
             <option value="9">Reggae</option>
             <option value="10">Funk</option>
-            <option value="House">House</option>
-            <option value="Hip-Hop">Hip-Hop</option>
-            <option value="Varietes">Variétés</option>
+            <option value="11">House</option>
+            <option value="12">Hip-Hop</option>
+            <option value="13">Variétés</option>
         </select>
 
     </div>
