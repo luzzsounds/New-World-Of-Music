@@ -79,7 +79,7 @@ else {
      $connection = mysqli_connect("localhost","root","","New-World-of-Music");
 
      $sql = " INSERT INTO users (pseudo,email,password,token,created_at,status)
-              VALUES (:pseudo,:ville,:email,:password,:token,NOW(),1)";
+              VALUES (:pseudo,:email,:password,:token,NOW(),1)";
 
             $query = $pdo->prepare($sql);
             $query ->bindValue(':pseudo',$nomgroupe,PDO::PARAM_STR);
