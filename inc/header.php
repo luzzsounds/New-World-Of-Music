@@ -1,6 +1,5 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,57 +13,31 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-</head>
 <body>
 <div class="wrapper">
-    <header>
 
-        <nav>
 
-            <div class="menu-icon">
-                <i class="fa fa-bars fa-2x"></i>
-            </div>
+    <nav>
 
-            <div class="logo">
-                New world of music
-            </div>
+        <div class="menu-icon">
+            <i class="fa fa-bars fa-2x"></i>
+        </div>
 
-            <div class="menu">
-                <ul>
-                    <li><a href="#">Accueil</a></li>
-                    <li><a href="#">Événement</a></li>
-                    <li><a href="#">Inscription</a></li>
-                    <li><a href="#">Connexion</a></li>
-                </ul>
-            </div>
-        </nav>
+        <div class="logo">
+            NEW WORLD OF MUSIC
+        </div>
 
-    </header>
+        <div class="menu">
+            <ul>
+                <li><a href="index.php">Accueil</a></li>
+                <li><a href="evenements.php"> Plus d'Événement</a></li>
+                <li><a href="#">Connexion</a></li>
+                <li><a href="#">Utilisateur</a></li>
+            </ul>
+        </div>
+    </nav>
 
 
 
-    <script type="text/javascript">
 
-        // Menu-toggle button
-
-        $(document).ready(function() {
-            $(".menu-icon").on("click", function() {
-                $("nav ul").toggleClass("showing");
-            });
-        });
-
-        // Scrolling Effect
-
-        $(window).on("scroll", function() {
-            if($(window).scrollTop()) {
-                $('nav').addClass('black');
-            }
-
-            else {
-                $('nav').removeClass('black');
-            }
-        })
-
-
-    </script>
 
