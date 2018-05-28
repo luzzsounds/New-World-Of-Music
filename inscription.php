@@ -1,4 +1,7 @@
-
+<?php
+include ("assets/functions/function.php");
+include ("inc/pdo.php");
+?>
 
 <form method="POST" action="" id="">
 
@@ -9,22 +12,22 @@
 
     <div>
 
-        <input type="text" name="pseudo" id="pseudo" value="<?php if(!empty($_POST['pseudo'])) { echo $_POST['pseudo'];} ?>"/>
+        <input type="text" name="pseudo" id="pseudo" placeholder="Pseudo" value="<?php if(!empty($_POST['pseudo'])) { echo $_POST['pseudo'];} ?>"/>
 
     </div>
 
 
     <div class="form-group">
 
-        <input type="text" name="email" id="titre" value="<?php if(!empty($_POST['email'])) { echo $_POST['email']; } ?>"/>
+        <input type="text" name="email" id="email" placeholder="Email" value="<?php if(!empty($_POST['email'])) { echo $_POST['email']; } ?>"/>
 
     </div>
 
 
     <div class="form-group">
 
-        <input type="text" name="password"  id="password"  value="<?php if(!empty($_POST['password'])) { echo $_POST['password']; } ?>"/>
-        <input type="text" name="password2" id="password2" value="<?php if(!empty($_POST['password2'])) {echo $_POST['password2']; } ?>"/>
+        <input type="text" name="password"  id="password" placeholder="Mot de Passe" value="<?php if(!empty($_POST['password'])) { echo $_POST['password']; } ?>"/>
+        <input type="text" name="password2" id="password2" placeholder="Confirmer votre Mot de Sasse" value="<?php if(!empty($_POST['password2'])) {echo $_POST['password2']; } ?>"/>
 
     </div>
 
@@ -42,23 +45,18 @@
 if (isset($_POST['frmRegistration'])) {
 
 
-
-
-
-
-$pseudo = $_POST['pseudo'] ? "";
-$email = $_POST['email'] ? "";
-$mdp = $_POST['password'] ? "";
-    $mdp2 = $_POST['password2'] ? "";
-    $token = tokengenerate(50);
-    $createdat = $_POST['created_at'] ? "";
+$Pseudo = $_POST['pseudo'] ?? "";
+$Email = $_POST['email'] ?? "";
+$Mdp = $_POST['password'] ?? "";
+    $Mdp2 = $_POST['password2'] ?? "";
+    $Token = tokengenerate(50);
 
       $erreurs = array();
 
-if ($pseudo == "") array_push($erreurs, "Veuillez saisir votre email");
-if ($email == "") array_push($erreurs, "Veuillez saisir votre nom de groupe");
-if ($mdp == "") array_push($erreurs, "Veuillez saisir votre mot de passe");
-if ($mdp2 == "") array_push($erreurs, "Veuillez confirmer votre mot de passe");
+if ($Pseudo == "") array_push($erreurs, "Veuillez saisir votre email");
+if ($Email == "") array_push($erreurs, "Veuillez saisir votre nom de groupe");
+if ($Mdp == "") array_push($erreurs, "Veuillez saisir votre mot de passe");
+if ($Mdp2 == "") array_push($erreurs, "Veuillez confirmer votre mot de passe");
 
 if (count($erreurs) > 0) {
     $message = "<ul>";
@@ -75,21 +73,17 @@ if (count($erreurs) > 0) {
 }
 
 else {
-     $mdp = hash('sha512',$mdp);
-     $connection = mysqli_connect("localhost","root","","New-World-of-Music");
+     $Mdp = hash('sha256',$Mdp);
+     $connection = mysqli_connect("localhost","root","","new-world-of-music");
 
-     $sql = " INSERT INTO users (pseudo,email,password,token,created_at,status)
-              VALUES (:pseudo,:email,:password,:token,NOW(),1)";
+    $sql = "INSERT INTO users (Pseudo,Email,Password, Token  ) VALUES ( :Pseudo , :Email , :Password , :Token)";
 
-            $query = $pdo->prepare($sql);
-            $query ->bindValue(':pseudo',$nomgroupe,PDO::PARAM_STR);
-
-            $query ->bindValue(':email',$email,PDO::PARAM_STR);
-            $query ->bindValue(':mdp',$mdp,PDO::PARAM_STR);
-
-            $query ->bindValue(':token',$token,PDO::PARAM_STR);
-
-            $query ->execute();
+    $query = $pdo->prepare($sql);
+    $query ->bindValue(':Pseudo', $Pseudo, PDO::PARAM_STR);
+    $query ->bindValue(':Email', $Email, PDO::PARAM_STR);
+    $query ->bindValue(':Password', $Mdp, PDO::PARAM_STR);
+    $query ->bindValue(':Token', $Token, PDO::PARAM_STR);
+    $query ->execute();
 
             if (!$connection) {
                 die("Erreur MySqL" . mysqli_connect_errno() . " | " . mysqli_connect_error());
@@ -136,9 +130,3 @@ else {
 
 
 
-
-
-
-
-
-?>
