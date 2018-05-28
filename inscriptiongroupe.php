@@ -1,3 +1,8 @@
+<?php
+include ("assets/functions/function.php");
+include ("inc/pdo.php");
+?>
+
 
 <!--Formulaire Inscription Groupe-->
 
@@ -7,13 +12,13 @@
 
 
 
-<form method="POST" action="" id="">
+<form method="POST" action="" >
 
     <div class="form-group">
 
-        <label for="titre">Inscription Groupe/Artiste </label>
 
-<input type="text" name="nomgroupe" id="nomgroupe" value="<?php if(!empty($_POST['nomgroupe'])) { echo $_POST['nomgroupe']; } ?> "/>
+
+<input type="text" name="nomgroupe" id="nomgroupe" placeholder="Nom du Groupe / Artistes" value="<?php if(!empty($_POST['nomgroupe'])) { echo $_POST['nomgroupe']; } ?> "/>
 
     </div>
 
@@ -21,15 +26,15 @@
 
     <div class="form-group">
 
-        <input type="text" name="email" id="titre" value="<?php if(!empty($_POST['email'])) { echo $_POST['email']; } ?>"/>
+        <input type="text" name="email" id="titre" placeholder="Exemple@exemple.com" value="<?php if(!empty($_POST['email'])) { echo $_POST['email']; } ?>"/>
 
     </div>
 
 
     <div class="form-group">
 
-        <input type="text" name="password"  id="password"  value="<?php if(!empty($_POST['password'])) { echo $_POST['password']; } ?>"/>
-        <input type="text" name="password2" id="password2" value="<?php if(!empty($_POST['password2'])) {echo $_POST['password2']; } ?>"/>
+        <input type="text" name="password"  id="password"  placeholder="Mot de Passe" value="<?php if(!empty($_POST['password'])) { echo $_POST['password']; } ?>"/>
+        <input type="text" name="password2" id="password2" placeholder="Veuillez confirmer votre mot de passe" value="<?php if(!empty($_POST['password2'])) {echo $_POST['password2']; } ?>"/>
 
     </div>
 
@@ -68,33 +73,21 @@
 if (isset($_POST['frmRegistration'])) {
 
 
-    if (isset($_POST['nomgroupe'])) {
-        $nomgroupe = $_POST['nomgroupe'];
-    }
-    if(isset($_POST['select'])){
-        echo "Option choisie :'.$_POST['select'].'";
-
-        $resultat = $_POST['select'];
-    }
-    else {
-        $nomgroupe = "";
-    }
-}
-
-
-$nomgroupe = $_POST['nomgroupe'] ? "";
-$email = $_POST['email'] ? "";
-$mdp = $_POST['password'] ? "";
-    $mdp2 = $_POST['password2'] ? "";
+$nomgroupe = $_POST['nomgroupe'] ?? "";
+$email = $_POST['email'] ?? "";
+$mdp = $_POST['password'] ?? "";
+    $mdp2 = $_POST['password2'] ?? "";
     $token = tokengenerate(50);
-    $createdat = $_POST['created_at'] ? "";
+    $select = $_POST['select'] ?? "";
+
 
       $erreurs = array();
 
-if ($nomgroupe == "") array_push($erreurs, "Veuillez saisir votre email");
-if ($email == "") array_push($erreurs, "Veuillez saisir votre nom de groupe");
+if ($nomgroupe == "") array_push($erreurs, "Veuillez saisir votre nom de groupe");
+if ($email == "") array_push($erreurs, "Veuillez saisir votre email");
 if ($mdp == "") array_push($erreurs, "Veuillez saisir votre mot de passe");
 if ($mdp2 == "") array_push($erreurs, "Veuillez confirmer votre mot de passe");
+if ($select == "") array_push($erreurs,"Veuillez Selectionner au moins 1 style de Musiques" );
 
 if (count($erreurs) > 0) {
     $message = "<ul>";
@@ -111,17 +104,17 @@ if (count($erreurs) > 0) {
 }
 
 else {
-     $mdp = hash('sha512',$mdp);
+     $mdp = hash('sha256',$mdp);
      $connection = mysqli_connect("localhost","root","","New-World-of-Music");
 
-     $sql = " INSERT INTO users (nomgroupe,ville,email,password,token,created_at,status)
-              VALUES (:nomgroupe,:ville,:email,:password,:token,NOW(),1)";
+     $sql = " INSERT INTO users (pseudo,email,password,token)
+              VALUES (:pseudo,:email,:password,:token)";
 
             $query = $pdo->prepare($sql);
-            $query ->bindValue(':nomgroupe',$nomgroupe,PDO::PARAM_STR);
+            $query ->bindValue(':pseudo',$nomgroupe,PDO::PARAM_STR);
 
             $query ->bindValue(':email',$email,PDO::PARAM_STR);
-            $query ->bindValue(':mdp',$mdp,PDO::PARAM_STR);
+            $query ->bindValue(':password',$mdp,PDO::PARAM_STR);
 
             $query ->bindValue(':token',$token,PDO::PARAM_STR);
 
