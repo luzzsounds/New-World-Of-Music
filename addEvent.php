@@ -17,28 +17,60 @@ if ( !empty($_POST['submitidee']) ) {
     $descriptionEVENT = trim(strip_tags($_POST['descriptionEVENT']));
 
 
-    //verification auteur
-    if (!empty($auteur)){
-        if(strlen($auteur) < 3 ) {
+    //verification affiche event
+    /*if (!empty($afficheEVENT)){
+        if(strlen($afficheEVENT) < 3 ) {
             $error['auteur'] = 'Votre nom est trop court. (minimum 3 caractères)';
-        } elseif(strlen($auteur) > 40) {
-            $error['auteur'] = 'Votre nom est trop long.';
-        }
-    } else {
-        $error['auteur'] = 'Veuillez entrer votre nom';
-    }
-
-    //verification idee
-    if (!empty($idee)){
-        if(strlen($idee) < 3 ) {
-            $error['idee'] = 'Votre nom est trop court. (minimum 3 caractères)';
-        } elseif(strlen($idee) > 220) {
-            $error['idee'] = 'Votre nom est trop long.';
+        } elseif(strlen($afficheEVENT) > 40) {
+            $error['afficheEVENT'] = 'Votre nom est trop long.';
         }
 
     } else {
-        $error['idee'] = 'Veuillez renseigner votre idée';
+        $error['afficheEVENT'] = 'Veuillez entrer votre nom';
+    }*/
+    //verification nom event
+    if (!empty($nomEVENT)){
+        if(strlen($nomEVENT) < 3 ) {
+            $error['nomEVENT'] = 'Nom trop court. (minimum 3 caractères)';
+        } elseif(strlen($nomEVENT) > 70) {
+            $error['nomEVENT'] = 'Le nom de lévenements et trop long.';
+        }
+    } else {
+        $error['nomEVENT'] = 'Veuillez entrer le nom de lévenement';
     }
+    //verification emailEVENT
+    if (!empty($emailEVENT)){
+        if(strlen($emailEVENT) < 3 ) {
+            $error['emailEVENT'] = 'Votre email est trop court. (minimum 3 caractères)';
+        } elseif(strlen($emailEVENT) > 40) {
+            $error['emailEVENT'] = 'Votre email est trop long.';
+        }
+    } else {
+        $error['auteur'] = 'Veuillez entrer votre email';
+    }
+
+    //cp
+    if (!empty($cp)){
+        if(strlen($cp) < 3 ) {
+            $error['cp'] = 'Votre code postal est trop court. (minimum 3 caractères)';
+        } elseif(strlen($cp) > 5) {
+            $error['cp'] = 'Votre code postal est trop long.';
+        }
+    } else {
+        $error['cp'] = 'Veuillez entrer votre code postal';
+    }
+    //descriptionEVENT
+    if (!empty($descriptionEVENT)){
+        if(strlen($descriptionEVENT) < 10 ) {
+            $error['descriptionEVENT'] = 'Votre description est trop court. (minimum 3 caractères)';
+        } elseif(strlen($descriptionEVENT) > 150) {
+            $error['descriptionEVENT'] = 'Votre descritpion est trop long.';
+        }
+    } else {
+        $error['descriptionEVENT'] = 'Veuillez entrer votre description';
+    }
+
+
 
 
 
@@ -74,10 +106,10 @@ if ( !empty($_POST['submitidee']) ) {
             <input type="file" name="afficheEVENT">
         </fieldset>
         <fieldset>
-            <input type="text" name="nomEVENT" id="auteur" class="form-control" value="<?php if(!empty($_POST['nomEVENT'])) { echo $_POST['nomEVENT']; } ?>" />
+            <input type="text" placeholder="Nom de l'evenements" name="nomEVENT" id="auteur"  value="<?php if(!empty($_POST['nomEVENT'])) { echo $_POST['nomEVENT']; } ?>" />
         </fieldset>
         <fieldset>
-            <input type="mail" name="emailEVENT" id="auteur" class="form-control" value="<?php if(!empty($_POST['emailEVENT'])) { echo $_POST['emailEVENT']; } ?>" />
+            <input type="email" name="emailEVENT" id="auteur" placeholder="Email"  value="<?php if(!empty($_POST['emailEVENT'])) { echo $_POST['emailEVENT']; } ?>" />
         </fieldset>
         <fieldset>
             <input type="date" name="dateheureEVENT" id="dateheureEVENT" class="form-control" value="<?php if(!empty($_POST['dateheureEVENT'])) { echo $_POST['dateheureEVENT']; } ?>" />
