@@ -1,8 +1,69 @@
 <?php
-include('pdo.php');
+include('inc/pdo.php');
 session_start();
-include('header.php');
+include('inc/header.php');
+
+$error = array();
+
+//si le formulaire est soumis
+if ( !empty($_POST['submitidee']) ) {
+    // Protection XSS
+    $afficheEVENT = trim(strip_tags($_POST['afficheEVENT']));
+    $nomEVENT = trim(strip_tags($_POST['nomEVENT']));
+    $emailEVENT = trim(strip_tags($_POST['emailEVENT']));
+    $dateheureEVENT = trim(strip_tags($_POST['dateheureEVENT']));
+    $cp = trim(strip_tags($_POST['cp']));
+    $ville = trim(strip_tags($_POST['ville']));
+    $descriptionEVENT = trim(strip_tags($_POST['descriptionEVENT']));
+
+
+    //verification auteur
+    if (!empty($auteur)){
+        if(strlen($auteur) < 3 ) {
+            $error['auteur'] = 'Votre nom est trop court. (minimum 3 caractères)';
+        } elseif(strlen($auteur) > 40) {
+            $error['auteur'] = 'Votre nom est trop long.';
+        }
+    } else {
+        $error['auteur'] = 'Veuillez entrer votre nom';
+    }
+
+    //verification idee
+    if (!empty($idee)){
+        if(strlen($idee) < 3 ) {
+            $error['idee'] = 'Votre nom est trop court. (minimum 3 caractères)';
+        } elseif(strlen($idee) > 220) {
+            $error['idee'] = 'Votre nom est trop long.';
+        }
+
+    } else {
+        $error['idee'] = 'Veuillez renseigner votre idée';
+    }
+
+
+
+
+            // Si aucune error
+            if (count($error) == 0) {
+                $sql = "INSERT INTO event (ID_Event,afficheEVENT,nomEVENT,emailEVENT,dateheureEVENT,cp,ville,descriptionEVENT)
+                VALUES (:ID_Event,:afficheEVENT,:nomEVENT,:emailEVENT,:dateheureEVENT,:cp,:ville,:descriptionEVENT)";
+                $query = $pdo->prepare($sql);
+
+                $query->bindValue(':ID_Event', $ID_Event, PDO::PARAM_INT);
+                $query->bindValue(':afficheEVENT', $afficheEVENT, PDO::PARAM_INT);
+                $query->bindValue(':nomEVENT', $nomEVENT, PDO::PARAM_STR);
+                $query->bindValue(':emailEVENT', $dateheureEVENT, PDO::PARAM_STR);
+                $query->bindValue(':cp', $cp, PDO::PARAM_STR);
+                $query->bindValue(':ville', $ville, PDO::PARAM_STR);
+                $query->bindValue(':descriptionEVENT', $descriptionEVENT, PDO::PARAM_STR);
+
+                $query->execute();
+                die;
+            }
+}
+
 ?>
+
 
 <div class="container">
     <form id="contact" action="" method="post">
@@ -10,26 +71,27 @@ include('header.php');
         <h5>BLABLABLA</h5>
         <fieldset>
             <h6>Affiche de l'évenements </h6>
-            <input type="file" name="file">
+            <input type="file" name="afficheEVENT">
         </fieldset>
         <fieldset>
-            <input placeholder="Nom de l'évenements" type="text" tabindex="1" required autofocus>
+            <input type="text" name="nomEVENT" id="auteur" class="form-control" value="<?php if(!empty($_POST['nomEVENT'])) { echo $_POST['nomEVENT']; } ?>" />
         </fieldset>
         <fieldset>
-            <input placeholder="Adresse Mail" type="text" tabindex="2" required>
+            <input type="mail" name="emailEVENT" id="auteur" class="form-control" value="<?php if(!empty($_POST['emailEVENT'])) { echo $_POST['emailEVENT']; } ?>" />
         </fieldset>
         <fieldset>
-            <input placeholder="Ajouter un extrait de musique" type="url" tabindex="4">
-
+            <input type="date" name="dateheureEVENT" id="dateheureEVENT" class="form-control" value="<?php if(!empty($_POST['dateheureEVENT'])) { echo $_POST['dateheureEVENT']; } ?>" />
+        </fieldset>
             <fieldset>
-                <input name="cp" id="cp" type="text" placeholder="Code Postal (ex: 76200)">
-                <input name="ville" id="ville" type="text" placeholder="Ville">
+                <input name="cp" id="cp" type="text" placeholder="Code Postal (ex: 76200)" value="<?php if(!empty($_POST['cp'])) { echo $_POST['cp']; } ?>">
+                <input name="ville" id="ville" type="text" placeholder="Ville" value="<?php if(!empty($_POST['ville'])) { echo $_POST['ville']; } ?>">
             </fieldset>
 
             <fieldset>
                 <optgroupe>Tags Style de musique </optgroupe>
 
             </fieldset>
+            <fieldset>
             <ul class="tags">
                 <li class="addedTag">Dubstep<span onclick="$(this).parent().remove();" class="tagRemove">x</span><input type="hidden" name="tags[]" value="Dubstep"></li>
 
@@ -40,23 +102,23 @@ include('header.php');
                     <input type="text" id="search-field">
                 </li>
             </ul>
-            <?php
-            $sql = "INSERT INTO event (ID_Event,Description_EVENT,Date/Heure,Catégorie_Musique,CodePostal,Ville,Nom_EVENT,Email_EVENT,ExtraitMusique_EVENT,Affiche_EVENT)
-            VALUES (:idevent,:descriptionevent,:date/heure,:catégoriemusique,:codepostal,:ville,:nomevent,:emailevent,:extraitmusiqueevent,:afficheevent)";
-            $query = $pdo->prepare($sql);
-            $query->bindValue(':IDEvent',$ID_Event,PDO::PARAM_INT);
-            $query->bindValue(':DescriptionEVENT',$Description_EVENT,PDO::PARAM_INT);
-            $query->bindValue(':Date/Heure',$Date/Heure,PDO::PARAM_INT);
-            $query->bindValue(':CatégorieMusique',$Catégorie_Musique,PDO::PARAM_INT);
-            $query->bindValue(':CodePostal',$CodePostal,PDO::PARAM_INT);
-            $query->bindValue(':Ville',$Ville,PDO::PARAM_INT);
-            $query->bindValue(':NomEVENT',$Nom_EVENT,PDO::PARAM_INT);
-            $query->bindValue(':EmailEVENT',$Email_EVENT,PDO::PARAM_INT);
-            $query->bindValue(':ExtraitMusiqueEVENT',$ExtraitMusique_EVENT,PDO::PARAM_INT);
-            $query->bindValue(':AfficheEVENT',$Affiche_EVENT,PDO::PARAM_INT);
+            </fieldset>
+        <fieldset>
+            <textarea placeholder="Description du groupe.." name="descriptionEVENT" id="descriptionEVENT" type="text" value="<?php if(!empty($_POST['descriptionEVENT'])) { echo $_POST['descriptionEVENT']; } ?>" ></textarea>
 
-            $query->execute();
-            ?>
+        </fieldset>
+        <fieldset>
+            <button name="submit" type="submit" id="contact-submit" data-submit="...envoie">Envoyer</button>
+        </fieldset>
+
+
+
+
+
+
+
+
+
             <!-------------------------------------------STYLE TAGS ---------------------------->
             <style>
                 ol, ul {
@@ -226,21 +288,85 @@ include('header.php');
                 });
             </script>
 
-        </fieldset>
-
-        <fieldset>
-            <textarea placeholder="Description du groupe.." tabindex="5" required></textarea>
-        </fieldset>
-        <fieldset>
-            <button name="submit" type="submit" id="contact-submit" data-submit="...envoie">Envoyer</button>
-        </fieldset>
-
-    </form>
-</div>
 
 
 
+<!-------------------------------------------STYLE DU FORMULAIRE----------------------------->
+
+
+
+<style>
+
+
+    .container {
+        max-width: 400px;
+        width: 100%;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    #contact input[type="text"],
+    #contact input[type="email"],
+    #contact input[type="tel"],
+    #contact input[type="url"],
+    #contact textarea,
+    #contact button[type="submit"] {
+        font: 400 12px/16px "Roboto", Helvetica, Arial, sans-serif;
+    }
+
+    #contact {
+        background: #F9F9F9;
+        padding: 25px;
+        margin: 150px 0;
+        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    }
+
+
+
+    fieldset {
+        border: medium none !important;
+        margin: 0 0 10px;
+        min-width: 100%;
+        padding: 0;
+        width: 90%;
+    }
+
+    #contact input[type="text"],
+    #contact input[type="email"],
+    #contact input[type="tel"],
+    #contact input[type="url"],
+    #contact textarea {
+        width: 100%;
+        border: 1px solid #ccc;
+        background: #FFF;
+        margin: 0 0 5px;
+        padding: 5px;
+    }
+
+
+
+    #contact button[type="submit"] {
+        cursor: pointer;
+        width: 100%;
+        border: none;
+        background: #ed6829;
+        color: #FFF;
+        margin: 0 0 5px;
+        padding: 10px;
+        font-size: 15px;
+    }
+
+    #contact button[type="submit"]:hover {
+        background: #ed6829;
+        -webkit-transition: background 0.3s ease-in-out;
+        -moz-transition: background 0.3s ease-in-out;
+        transition: background-color 0.3s ease-in-out;
+    }
 
 
 
 
+
+
+
+</style>
