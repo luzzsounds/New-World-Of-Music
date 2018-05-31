@@ -1,9 +1,9 @@
 © New-World-Of-Music - 2018
 --------------------
-Jean Lannel - Ludwig Lebrun - Gauthier cailly
+Jean Lannel - Ludwig Lebrun 
 
 New-World-Of-Music | Trouve ton groupe de musique et des concerts près de chez toi
-New-World-Of-Music | Platform d'évenemements pour mettre en avant les jeunes artistes
+New-World-Of-Music | Platform d'évenemements pour mettre en avant les jeunes artistes ( qui pourront poster leur évenements )
 --------------------------------------------------------------------------------------
 
 Fonctionnalités Principale :
